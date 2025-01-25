@@ -5,7 +5,7 @@ export function middleware(request) {
   const path = request.nextUrl.pathname
 
   // Define paths that are considered public (no auth required)
-  const isPublicPath = path === "/login" || path === "/register" || path === "/";
+  const isPublicPath = path === "/login" || path === "/register" || path === "/" || path === "/aboutus";
 
   // Check if the user has a token
   const token = request.cookies.get("token")?.value || ""

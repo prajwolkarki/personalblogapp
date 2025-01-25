@@ -8,14 +8,14 @@ import { Spotlight } from "../ui/spotlight";
 
 export default function Hero() {
   return (
-    <div className="min-h-screen">
+    <div>
       {/* Hero Section */}
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden min-h-[80vh] flex items-center justify-center">
         {/* Add the Spotlight component here */}
         <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
         
         <div className="absolute inset-0 z-0 bg-black text-white" />
-        <div className="container mx-auto px-4 py-24 relative z-10 ">
+        <div className="container mx-auto px-4 py-24 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-white">
               Share Your Story with the World
@@ -76,7 +76,8 @@ export default function Hero() {
       </div>
 
       {/* CTA Section */}
-      <div className="py-24">
+      <div className="py-24 bg-black text-white relative">
+        <Spotlight className="-top-60 left-0 md:left-60 md:-top-20 z-0" fill="white" />
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="text-4xl font-bold mb-6">Ready to Start Writing?</h2>
