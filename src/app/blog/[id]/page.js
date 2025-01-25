@@ -8,10 +8,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
 import { toast } from "react-hot-toast";
 import { CalendarDays, Tag, ArrowLeft, User } from "lucide-react";
-import "react-quill-new/dist/quill.snow.css"; 
-
+import "react-quill-new/dist/quill.snow.css";
 
 export default function BlogDetailPage() {
   const router = useRouter();
@@ -21,14 +21,11 @@ export default function BlogDetailPage() {
   const [blog, setBlog] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [comments,setComments]=useState(null);
-
 
   useEffect(() => {
-    
     const fetchBlog = async () => {
       try {
-        const response = await fetch(`/api/blogs/${blogId}/comment`);
+        const response = await fetch(`/api/blogs/${blogId}`);
         if (!response.ok) throw new Error("Failed to fetch blog");
         const data = await response.json();
         setBlog(data.blog);
@@ -42,9 +39,7 @@ export default function BlogDetailPage() {
     };
 
     if (blogId) fetchBlog();
- 
   }, []);
-
 
   if (isLoading) {
     return (
@@ -135,7 +130,7 @@ export default function BlogDetailPage() {
                   [&_blockquote]:pl-4 [&_blockquote]:text-muted-foreground"
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
-             
+
               {/* Comments Section */}
               <div className="space-y-8 mt-12">
                 <h2 className="text-2xl font-bold">
@@ -147,6 +142,7 @@ export default function BlogDetailPage() {
                   <h3 className="font-medium mb-4">What are your thoughts?</h3>
                   <form
                     className="space-y-4"
+                    // Replace the comment submission handler with this:
                     onSubmit={async (e) => {
                       e.preventDefault();
                       const formData = new FormData(e.currentTarget);
@@ -167,11 +163,15 @@ export default function BlogDetailPage() {
                         if (!response.ok)
                           throw new Error("Failed to post comment");
 
-                        // Refresh comments after successful post
-                        const updatedBlog = await fetch(
-                          `/api/blogs/${blogId}`
-                        ).then((res) => res.json());
-                        setBlog(updatedBlog.blog);
+                        // Get the updated blog data with comments
+                        const updatedResponse = await fetch(
+                          `/api/blogs/${blogId}/comment`
+                        );
+                        const updatedData = await updatedResponse.json();
+
+                        // Update state with the complete blog data
+                        setBlog(updatedData.blog);
+
                         e.target.reset();
                         toast.success("Comment posted!");
                       } catch (err) {
@@ -196,27 +196,44 @@ export default function BlogDetailPage() {
                   {blog.comments?.map((comment) => (
                     <div
                       key={comment._id}
-                      className="border-l-4 border-muted pl-4"
+                      className="border-l-2 border-gray-200 pl-4 dark:border-gray-700"
                     >
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
-                        <span className="font-medium text-foreground">
-                          {comment.user.name || "Anonymous"}
-                        </span>
-                        <span>·</span>
-                        <time dateTime={comment.createdAt}>
-                          {new Date(comment.createdAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              month: "short",
-                              day: "numeric",
-                              year: "numeric",
-                            }
+                      <div className="flex items-start gap-3">
+                        <Avatar className="h-9 w-9 border-2 border-black rounded-full dark:border-gray-600">
+                          {comment.user.image ? (
+                            <AvatarImage
+                              src={comment.user.image}
+                              alt={comment.user.name}
+                              className="rounded-full"
+                            />
+                          ) : (
+                            <AvatarFallback className="bg-black text-white dark:bg-gray-800 flex items-center justify-center h-full rounded-full text-sm font-medium">
+                              {comment.user?.name?.charAt(0) || "U"}
+                            </AvatarFallback>
                           )}
-                        </time>
-                      </div>
-                      <p className="text-foreground">{comment.text}</p>
+                        </Avatar>
 
-                  
+                        <div className="flex-1">
+                          <div className="flex items-baseline gap-2">
+                            <span className="text-sm font-semibold">
+                              {comment.user.name}
+                            </span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
+                              {new Date(comment.createdAt).toLocaleDateString(
+                                "en-US",
+                                {
+                                  month: "short",
+                                  day: "numeric",
+                                  year: "numeric",
+                                }
+                              )}
+                            </span>
+                          </div>
+                          <p className="mt-1 text-sm text-gray-700 dark:text-gray-300">
+                            {comment.text}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   ))}
                 </div>
