@@ -12,6 +12,7 @@ import { BLOG_CATEGORIES } from "@/lib/config";
 import { getBlogPosts, getLatestBlogs } from "./blogServerFunctions";
 import ThumbsUpBtn from "./ThumbsUpBtn";
 import CommentBtn from "./CommentBtn";
+import ShareBtn from "./ShareBtn";
 
 export default async function BlogPage({ searchParams }) {
   const searchQuery = (await searchParams)?.search || "";
@@ -64,6 +65,10 @@ export default async function BlogPage({ searchParams }) {
 
                         {/* {CommentBtn} */}
                         <CommentBtn blog={JSON.stringify(blog)}/>
+
+                        {/* {ShareBtn} */}
+                        <ShareBtn blog={JSON.stringify(blog)} />
+
                       </div>
                       <Link href={`/blog/${blog._id}`}>
                         <Button variant="link" className="ml-auto">
