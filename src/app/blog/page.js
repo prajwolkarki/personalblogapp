@@ -1,7 +1,3 @@
-
-import connectToDatabase from "@/lib/db";
-import Blog from "@/models/BlogPost";
-import User from "@/models/User";
 import {
   Card,
   CardDescription,
@@ -13,46 +9,9 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { BLOG_CATEGORIES } from "@/lib/config";
-import { ThumbsUp, MessageCircle } from "lucide-react";
-
-
-async function getBlogPosts(searchQuery = "", category = "") {
-  try {
-    await connectToDatabase();
-    let query = {};
-    if (searchQuery) {
-      query.$or = [
-        { title: { $regex: searchQuery, $options: "i" } },
-        { content: { $regex: searchQuery, $options: "i" } },
-      ];
-    }
-    if (category) {
-      query.category = category;
-    }
-    const blogs = await Blog.find(query).populate("author", "name").lean();
-    //console.log("Fetched blogs:", blogs); // Debug log
-    return blogs;
-  } catch (error) {
-    console.error("Error fetching blogs:", error);
-    return [];
-  }
-}
-
-async function getLatestBlogs(limit = 5) {
-  try {
-    await connectToDatabase();
-    const blogs = await Blog.find({})
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .lean();
-    return blogs;
-  } catch (error) {
-    console.error("Error fetching latest blogs:", error);
-    return [];
-  }
-}
-
-
+import { getBlogPosts, getLatestBlogs } from "./blogServerFunctions";
+import ThumbsUpBtn from "./ThumbsUpBtn";
+import CommentBtn from "./CommentBtn";
 
 export default async function BlogPage({ searchParams }) {
   const searchQuery = (await searchParams)?.search || "";
@@ -60,7 +19,6 @@ export default async function BlogPage({ searchParams }) {
   const blogs = await getBlogPosts(searchQuery, category);
   const latestBlogs = await getLatestBlogs();
 
- 
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -102,17 +60,10 @@ export default async function BlogPage({ searchParams }) {
                     <CardFooter className="p-0 flex items-center justify-between">
                       <div className="flex items-center gap-4">
                         <Badge>{blog.category}</Badge>
-                        <button 
-                           
-                          className="flex items-center gap-1 hover:text-blue-500 transition-colors"
-                        >
-                          <ThumbsUp className="w-4 h-4" />
-                          <span className="text-sm">{blog.likes || 0}</span>
-                        </button>
-                        <div className="flex items-center gap-1">
-                          <MessageCircle className="w-4 h-4" />
-                          <span className="text-sm">{blog.comments?.length || 0}</span>
-                        </div>
+                        <ThumbsUpBtn blog={JSON.stringify(blog)} />
+
+                        {/* {CommentBtn} */}
+                        <CommentBtn blog={JSON.stringify(blog)}/>
                       </div>
                       <Link href={`/blog/${blog._id}`}>
                         <Button variant="link" className="ml-auto">
