@@ -25,8 +25,6 @@ async function getBlogPosts() {
 
 export default function BlogTable() {
   const [posts, setPosts] = useState([]);
-
-  // Fetch blog posts when component mounts
   useState(() => {
     (async () => {
       const data = await getBlogPosts();
