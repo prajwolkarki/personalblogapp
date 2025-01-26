@@ -89,7 +89,7 @@ export default function BlogTable() {
                         </Link>
                       </Button>
                       <Button variant="outline" size="icon" asChild>
-                        <Link href={`/blog/edit/${post._id}`}>
+                        <Link href={`/blog/${post._id}/edit`}>
                           <Pencil className="h-4 w-4" />
                           <span className="sr-only">Edit</span>
                         </Link>

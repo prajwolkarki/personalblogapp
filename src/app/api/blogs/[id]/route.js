@@ -1,3 +1,4 @@
+// app/api/blogs/[id/route.js
 import connectToDatabase from '@/lib/db';
 import Blog from '@/models/BlogPost';
 import { NextResponse } from 'next/server';
@@ -83,7 +84,7 @@ export async function PUT(request, { params }) {
   await connectToDatabase();
 
   try {
-    const { id } = params;
+    const { id } = await params;
     const body = await request.json();
     const { title, content, category, image } = body;
 

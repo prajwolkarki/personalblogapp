@@ -3,7 +3,7 @@ import connectToDatabase from "@/lib/db";
 import Blog from "@/models/BlogPost";
 import { cookies } from "next/headers";
 import { verifyAuth } from "@/lib/auth";
-import mongoose from "mongoose"; // Add this import
+import mongoose from "mongoose"; 
 
 export async function POST(request, { params }) {
   const { id } = await params; // Remove await here
