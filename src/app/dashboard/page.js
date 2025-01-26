@@ -1,4 +1,4 @@
-"use client"; // Required for client-side interactivity
+"use client"; 
 import { useState } from "react";
 import { format } from "date-fns";
 import { Button } from "@/components/ui/button";
@@ -9,7 +9,7 @@ import { Eye, Pencil, Trash } from "lucide-react";
 
 async function getBlogPosts() {
   try {
-    const res = await fetch("http://localhost:3000/api/blogs", {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
       cache: "no-store",
     });
     if (!res.ok) {
@@ -37,7 +37,7 @@ export default function BlogTable() {
   const handleDelete = async (id) => {
     if (confirm("Are you sure you want to delete this blog post?")) {
       try {
-        const res = await fetch(`http://localhost:3000/api/blogs/${id}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${id}`, {
           method: "DELETE",
         });
         if (!res.ok) {

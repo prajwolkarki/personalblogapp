@@ -68,7 +68,7 @@ export async function registerUserAction(formData) {
     await newUser.save();
     const emailDomain = email.split("@")[1];
    // console.log(emailDomain);
-    const verificationLink = `http://localhost:3000/verifyemail?token=${verifytoken}`;
+    const verificationLink = `${process.env.NEXT_PUBLIC_API_URL}/verifyemail?token=${verifytoken}`;
     const emailContent = `
     Hello ${name},
     

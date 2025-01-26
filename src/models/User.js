@@ -19,7 +19,13 @@ const UserSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-  }
+  },
+  isVerified:{
+    type: Boolean,
+    default: false,
+  },
+  verificationCode: String,
+  verificationCodeExpiry: Date
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);
