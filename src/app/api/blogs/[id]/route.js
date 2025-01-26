@@ -4,9 +4,10 @@ import Blog from '@/models/BlogPost';
 import { NextResponse } from 'next/server';
 
 export async function GET(request, { params }) {
+  const { id } = await params;
   try {
     await connectToDatabase();
-    const { id } = await params;
+   
     
     if (!id) {
       return NextResponse.json(
@@ -29,13 +30,6 @@ export async function GET(request, { params }) {
   } catch (error) {
     console.error('Error fetching blog:', error);
     
-    if (error.name === 'CastError') {
-      return NextResponse.json(
-        { error: 'Invalid blog ID format' },
-        { status: 400 }
-      );
-    }
-
     return NextResponse.json(
       { error: 'An error occurred while fetching the blog' },
       { status: 500 }
