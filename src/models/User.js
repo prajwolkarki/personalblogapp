@@ -25,7 +25,9 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
   verificationCode: String,
-  verificationCodeExpiry: Date
+  verificationCodeExpiry: Date,
+  resetToken: String,
+  resetTokenExpiry: Date,
 });
 
 export default mongoose.models.User || mongoose.model("User", UserSchema);

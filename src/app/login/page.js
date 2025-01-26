@@ -1,7 +1,7 @@
 import LoginForm from "@/components/auth/LoginForm";
 import { cookies } from "next/headers";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+
 
 export default async function LoginPage() {
   const token = (await cookies()).get("token")?.value;
@@ -27,6 +27,15 @@ export default async function LoginPage() {
               </Link>
             </p>
           </div>
+          <p className="text-center text-sm text-gray-600">
+              Forgot Password?
+              <Link
+                className="font-semibold ml-3 text-black hover:text-black"
+                href={"/forgot-password"}
+              >
+                Forgot Password
+              </Link>
+            </p>
         </div>
       </div>
       <div className="hidden  md:flex w-1/2 p-12 items-center justify-center relative">
