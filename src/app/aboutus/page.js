@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { FiTarget, FiFeather, FiUsers, FiGlobe, FiBook } from "react-icons/fi";
 import Image from "next/image";
+import Footer from "./footer";
 
 export default function AboutPage() {
   return (
