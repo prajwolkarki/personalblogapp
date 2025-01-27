@@ -40,13 +40,14 @@ export default async function BlogPage({ searchParams }) {
                   className="hover:shadow-xl transition-shadow flex flex-col md:flex-row"
                 >
                   {/* Image on the Left (Square Aspect Ratio) */}
-                  <div className="w-full md:w-1/6 md:aspect-square">
+                   <div className="w-full h-48 md:w-1/6 md:aspect-square">
                     <img
-                      src={blog.image || "/images/placeholder.svg"} // Use a default image if none is provided
+                      src={blog.image || "/images/placeholder.svg"}
                       alt={blog.title}
                       className="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none"
                     />
                   </div>
+
 
                   {/* Content on the Right */}
                   <div className="w-full p-4 flex flex-col justify-between">
