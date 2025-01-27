@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Spotlight } from "@/components/ui/spotlight"
 import { Feather, ArrowRight, BookOpen, Users } from "lucide-react"
+import Footer from "./footer";
 
 export default function Hero() {
   return (
