@@ -11,10 +11,8 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
-  // Add paths where header should be hidden
   const hiddenPaths = ['/login', '/register'];
 
-  // Handle scroll event
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -28,7 +26,6 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // If current path is in hiddenPaths, don't render the header
   if (hiddenPaths.includes(pathname)) {
     return null;
   }
@@ -51,36 +48,21 @@ const Header = () => {
         </Link>
 
         <div className="flex items-center space-x-4">
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-4">
-            <Link
-              href="/"
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
-            >
+            <Link href="/" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
               Home
             </Link>
-
-            <Link
-              href="/login"
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
-            >
+            <Link href="/login" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
               Sign In
             </Link>
-            <Link
-              href="/aboutus"
-              className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
-            >
+            <Link href="/aboutus" className="text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
               About Us
             </Link>
-            <Button
-              asChild
-              className="bg-black text-white rounded-full px-4 py-2"
-            >
+            <Button asChild className="bg-black text-white rounded-full px-4 py-2">
               <Link href="/register">Get Started</Link>
             </Button>
           </nav>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={toggleMenu}
             className="md:hidden p-2 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-white"
@@ -91,31 +73,18 @@ const Header = () => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
       {isMenuOpen && (
         <nav className="md:hidden bg-white dark:bg-gray-800 px-4 py-2">
-          <Link
-            href="/"
-            className="block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
-          >
+          <Link href="/" className="block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
             Home
           </Link>
-          <Link
-            href="/blog"
-            className="block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
-          >
+          <Link href="/blog" className="block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
             Blog
           </Link>
-          <Link
-            href="/login"
-            className="block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white"
-          >
+          <Link href="/login" className="block py-2 text-gray-600 hover:text-gray-800 dark:text-gray-300 dark:hover:text-white">
             Sign In
           </Link>
-          <Button
-            asChild
-            className="bg-black text-white rounded-full px-4 py-2 mt-2"
-          >
+          <Button asChild className="bg-black text-white rounded-full px-4 py-2 mt-2">
             <Link href="/register">Get Started</Link>
           </Button>
         </nav>
