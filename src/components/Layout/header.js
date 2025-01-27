@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
@@ -8,23 +8,10 @@ import { Button } from "@/components/ui/button";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
 
   // Paths where the header is hidden
   const hiddenPaths = ["/login", "/register"];
-
-  // Optimize scroll handler with useCallback to prevent unnecessary re-renders
-  const handleScroll = useCallback(() => {
-    setIsScrolled(window.scrollY > 50);
-  }, []);
-
-  useEffect(() => {
-    if (hiddenPaths.includes(pathname)) return;
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [handleScroll, pathname]);
 
   // Hide header for specific paths
   if (hiddenPaths.includes(pathname)) {
@@ -33,11 +20,7 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 w-full z-50 transition-all duration-200 ${
-        isScrolled
-          ? "bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-md"
-          : "bg-white dark:bg-gray-800"
-      }`}
+      className="fixed top-0 left-0 w-full z-50 bg-white dark:bg-gray-800 shadow-md transition-all duration-200"
     >
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
