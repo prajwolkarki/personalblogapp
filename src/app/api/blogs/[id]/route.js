@@ -1,4 +1,4 @@
-// app/api/blogs/[id/route.js
+// app/api/blogs/[id]/route.js
 import connectToDatabase from '@/lib/db';
 import Blog from '@/models/BlogPost';
 import { NextResponse } from 'next/server';

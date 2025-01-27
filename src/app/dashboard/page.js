@@ -9,7 +9,7 @@ import { Eye, Pencil, Trash } from "lucide-react";
 
 async function getBlogPosts() {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs`, {
+    const res = await fetch(`/api/blogs`, {
       cache: "no-store",
     });
     if (!res.ok) {

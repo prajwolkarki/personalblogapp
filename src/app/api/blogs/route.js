@@ -3,6 +3,7 @@ import Blog from "@/models/BlogPost";
 import { NextResponse } from "next/server";
 import { verifyAuth } from "@/lib/auth";
 import { cookies } from "next/headers";
+import User from "@/models/User";
 
 export async function GET() {
   await connectToDatabase();

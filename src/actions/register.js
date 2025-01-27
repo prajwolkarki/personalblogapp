@@ -6,7 +6,7 @@ import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { sendEmail } from "@/lib/mail";
 import crypto from "crypto";
-import { NextResponse } from "next/server";
+
 
 const schema = z.object({
   name: z.string().min(2, { message: "Name must be at least 2 characters." }),
