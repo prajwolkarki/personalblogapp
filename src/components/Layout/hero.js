@@ -88,7 +88,9 @@ export default function Hero() {
           </div>
         </div>
       </div>
-    </div>
+  {/* Footer */}
+   <Footer/>
+ </div>
   )
 }
 
