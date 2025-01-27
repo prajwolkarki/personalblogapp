@@ -15,7 +15,7 @@ export default function Hero() {
         <div className="absolute inset-0 z-0 bg-black text-white" />
         <div className="container mx-auto px-4 py-12 sm:py-24 relative z-10">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-primary to-primary/60 bg-clip-text text-white">
               Share Your Story with the World
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground mb-8">
