@@ -20,13 +20,12 @@ export default async function BlogPage({ searchParams }) {
   const blogs = await getBlogPosts(searchQuery, category);
   const latestBlogs = await getLatestBlogs();
 
-
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-4xl font-bold mb-8 text-start">Blogs</h1>
+      <h1 className="text-2xl font-bold mb-6 text-start md:text-4xl">Blogs</h1>
 
       {/* Main Content Layout */}
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 md:gap-8">
         {/* Left Section - Blogs */}
         <div className="lg:col-span-3">
           {!blogs || blogs.length === 0 ? (
@@ -38,37 +37,34 @@ export default async function BlogPage({ searchParams }) {
               {blogs.map((blog) => (
                 <Card
                   key={blog._id}
-                  className="hover:shadow-xl transition-shadow flex"
+                  className="hover:shadow-xl transition-shadow flex flex-col md:flex-row"
                 >
                   {/* Image on the Left (Square Aspect Ratio) */}
-                  <div className="w-1/6 aspect-square">
+                  <div className="w-full md:w-1/6 md:aspect-square">
                     <img
                       src={blog.image || "/images/placeholder.svg"} // Use a default image if none is provided
                       alt={blog.title}
-                      className="w-full h-full object-cover rounded-l-lg"
+                      className="w-full h-full object-cover rounded-t-lg md:rounded-l-lg md:rounded-t-none"
                     />
                   </div>
 
                   {/* Content on the Right */}
-                  <div className="w-2/3 p-4 flex flex-col justify-between">
+                  <div className="w-full p-4 flex flex-col justify-between">
                     <CardHeader className="p-0">
-                      <CardTitle className="truncate">{blog.title}</CardTitle>
-                      <CardDescription>
+                      <CardTitle className="truncate text-lg md:text-xl">
+                        {blog.title}
+                      </CardTitle>
+                      <CardDescription className="text-sm md:text-base">
                         {new Date(blog.createdAt).toLocaleDateString()} •{" "}
                         {blog.author?.name || "Unknown Author"}
                       </CardDescription>
                     </CardHeader>
-                    <CardFooter className="p-0 flex items-center justify-between">
+                    <CardFooter className="p-0 flex flex-wrap items-center justify-between mt-4">
                       <div className="flex items-center gap-4">
                         <Badge>{blog.category}</Badge>
                         <ThumbsUpBtn blog={JSON.stringify(blog)} />
-
-                        {/* {CommentBtn} */}
-                        <CommentBtn blog={JSON.stringify(blog)}/>
-
-                        {/* {ShareBtn} */}
+                        <CommentBtn blog={JSON.stringify(blog)} />
                         <ShareBtn blog={JSON.stringify(blog)} />
-
                       </div>
                       <Link href={`/blog/${blog._id}`}>
                         <Button variant="link" className="ml-auto">
@@ -87,7 +83,9 @@ export default async function BlogPage({ searchParams }) {
         <div className="lg:col-span-1 space-y-8">
           {/* Top - Categories */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Categories</h2>
+            <h2 className="text-xl font-semibold mb-4 md:text-2xl">
+              Categories
+            </h2>
             <div className="flex flex-wrap gap-2">
               {BLOG_CATEGORIES.map((cat) => (
                 <Link
@@ -107,7 +105,9 @@ export default async function BlogPage({ searchParams }) {
 
           {/* Bottom - Latest Blogs */}
           <div>
-            <h2 className="text-2xl font-semibold mb-4">Latest Blogs</h2>
+            <h2 className="text-xl font-semibold mb-4 md:text-2xl">
+              Latest Blogs
+            </h2>
             <div className="space-y-4">
               {latestBlogs.map((blog) => (
                 <Link key={blog._id} href={`/blog/${blog._id}`}>
