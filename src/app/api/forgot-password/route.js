@@ -28,7 +28,7 @@ export async function POST(request) {
     await user.save();
 
     // Send the reset link to the user's email
-    const resetLink = `http://localhost:3000/reset-password?token=${resetToken}`;
+    const resetLink = `https://${process.env.NEXT_PUBLIC_API_URL}/reset-password?token=${resetToken}`;
     const emailContent = `
       Hello,
       
