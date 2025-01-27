@@ -62,7 +62,7 @@ export default function AuthenticatedHeader() {
   return (
     <header className="flex items-center justify-between px-4 py-3 bg-background border-b border-border md:px-6">
       {/* Logo Section */}
-      <div className="flex items-center space-x-4">
+      <div className="flex items-center space-x-4 mr-3">
         <Link href="/">
           <span className="text-xl font-bold text-foreground md:text-2xl">ब्लग संसार</span>
         </Link>
