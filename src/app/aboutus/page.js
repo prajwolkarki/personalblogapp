@@ -5,7 +5,7 @@ import Image from "next/image";
 
 export default function AboutPage() {
   return (
-    <div className="max-w-6xl mx-auto px-4 py-12">
+    <div className="max-w-6xl mx-auto mt-5 px-4 py-12">
       {/* Hero Section */}
       <section className="text-center mb-16">
         <h1 className="text-4xl font-bold text-gray-800 mb-4">
