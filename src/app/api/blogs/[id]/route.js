@@ -2,6 +2,7 @@
 import connectToDatabase from '@/lib/db';
 import Blog from '@/models/BlogPost';
 import { NextResponse } from 'next/server';
+import User from '@/models/User';
 
 export async function GET(request, { params }) {
   const { id } = await params;
