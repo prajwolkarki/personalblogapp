@@ -8,7 +8,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Avatar, AvatarFallback } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import { toast } from "react-hot-toast";
 import { CalendarDays, Tag, ArrowLeft, User } from "lucide-react";
 import "react-quill-new/dist/quill.snow.css";
@@ -28,8 +28,7 @@ export default function BlogDetailPage() {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${blogId}`);
         if (!response.ok) throw new Error("Failed to fetch blog");
         const data = await response.json();
-        setBlog(data.blog);
-        //console.log(data.blog);
+        setBlog(data.blog || null); // Ensure blog is set to null if data.blog is undefined
       } catch (err) {
         setError(err.message);
         toast.error(err.message);
@@ -39,7 +38,7 @@ export default function BlogDetailPage() {
     };
 
     if (blogId) fetchBlog();
-  }, []);
+  }, [blogId]);
 
   if (isLoading) {
     return (
@@ -82,6 +81,22 @@ export default function BlogDetailPage() {
     );
   }
 
+  if (!blog) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="w-full max-w-md text-center p-6">
+          <div className="space-y-4">
+            <h1 className="text-2xl font-bold">Blog Not Found</h1>
+            <Button onClick={() => router.push("/blog")} variant="outline">
+              <ArrowLeft className="mr-2 h-4 w-4" />
+              Back to All Posts
+            </Button>
+          </div>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <ScrollArea className="h-screen">
       <div className="min-h-screen bg-background">
@@ -92,7 +107,7 @@ export default function BlogDetailPage() {
               <div className="flex items-center justify-center gap-4 text-sm">
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <User className="h-4 w-4" />
-                  <span>{blog.author.name}</span>
+                  <span>{blog.author?.name || 'Unknown Author'}</span>
                 </div>
                 <div className="flex items-center gap-2 text-muted-foreground">
                   <CalendarDays className="h-4 w-4" />
@@ -116,7 +131,6 @@ export default function BlogDetailPage() {
                 </div>
               )}
               <Separator className="my-8" />
-              {/* Content Area with Quill Styling */}
               <div
                 className="ql-editor prose prose-lg max-w-none 
                   [&_ol]:list-decimal [&_ul]:list-disc
@@ -131,18 +145,15 @@ export default function BlogDetailPage() {
                 dangerouslySetInnerHTML={{ __html: blog.content }}
               />
 
-              {/* Comments Section */}
               <div className="space-y-8 mt-12">
                 <h2 className="text-2xl font-bold">
                   Responses ({blog.comments?.length || 0})
                 </h2>
 
-                {/* Comment Form */}
                 <div className="border rounded-lg p-6 shadow-sm">
                   <h3 className="font-medium mb-4">What are your thoughts?</h3>
                   <form
                     className="space-y-4"
-                    // Replace the comment submission handler with this:
                     onSubmit={async (e) => {
                       e.preventDefault();
                       const formData = new FormData(e.currentTarget);
@@ -163,13 +174,11 @@ export default function BlogDetailPage() {
                         if (!response.ok)
                           throw new Error("Failed to post comment");
 
-                        // Get the updated blog data with comments
                         const updatedResponse = await fetch(
                           `/api/blogs/${blogId}/comment`
                         );
                         const updatedData = await updatedResponse.json();
 
-                        // Update state with the complete blog data
                         setBlog(updatedData.blog);
 
                         e.target.reset();
@@ -191,7 +200,6 @@ export default function BlogDetailPage() {
                   </form>
                 </div>
 
-                {/* Comments List */}
                 <div className="space-y-6">
                   {blog.comments?.map((comment) => (
                     <div
@@ -200,7 +208,7 @@ export default function BlogDetailPage() {
                     >
                       <div className="flex items-start gap-3">
                         <Avatar className="h-9 w-9 border-2 border-black rounded-full dark:border-gray-600">
-                          {comment.user.image ? (
+                          {comment.user?.image ? (
                             <AvatarImage
                               src={comment.user.image}
                               alt={comment.user.name}
@@ -216,7 +224,7 @@ export default function BlogDetailPage() {
                         <div className="flex-1">
                           <div className="flex items-baseline gap-2">
                             <span className="text-sm font-semibold">
-                              {comment.user.name}
+                              {comment.user?.name || 'Unknown User'}
                             </span>
                             <span className="text-xs text-gray-500 dark:text-gray-400">
                               {new Date(comment.createdAt).toLocaleDateString(
@@ -238,7 +246,6 @@ export default function BlogDetailPage() {
                   ))}
                 </div>
               </div>
-              {/* Existing Back to All Posts button */}
               <div className="flex justify-center pt-8">
                 <Button
                   onClick={() => router.push("/blog")}
