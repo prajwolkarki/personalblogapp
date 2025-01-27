@@ -107,7 +107,7 @@ export default function AboutPage() {
         </h2>
         <div className="max-w-3xl mx-auto">
           <p className="text-lg text-gray-600 mb-6">
-            Founded in 2023 by a team of passionate writers and developers, we
+            Founded by a team of passionate writers and developers, we
             set out to create a space where ideas matter more than algorithms.
             Frustrated by the click-driven nature of modern social media, we
             built ब्लग संसार to:
