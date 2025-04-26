@@ -17,7 +17,7 @@ export async function GET(request, { params }) {
       );
     }
 
-    const blog = await Blog.findById(id).populate("author", "name");
+    const blog = await Blog.findById(id).populate("author", "name").populate('comments.user','name');
     
     if (!blog) {
       return NextResponse.json(
