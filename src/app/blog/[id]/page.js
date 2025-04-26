@@ -28,7 +28,7 @@ export default function BlogDetailPage() {
         const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/blogs/${blogId}`);
         if (!response.ok) throw new Error("Failed to fetch blog");
         const data = await response.json();
-        setBlog(data.blog || null); // Ensure blog is set to null if data.blog is undefined
+        setBlog(data.blog || null); 
       } catch (err) {
         setError(err.message);
         toast.error(err.message);
