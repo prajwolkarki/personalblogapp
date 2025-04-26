@@ -12,7 +12,7 @@ export async function GET() {
     // Retrieve the token from cookies
     const token = (await cookies()).get("token")?.value;
 
-    Verify the token and get the authenticated user
+    // Verify the token and get the authenticated user
     const user = await verifyAuth(token);
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
