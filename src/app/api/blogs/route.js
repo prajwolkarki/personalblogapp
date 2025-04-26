@@ -13,10 +13,10 @@ export async function GET() {
     const token = (await cookies()).get("token")?.value;
 
     // Verify the token and get the authenticated user
-    const user = await verifyAuth(token);
-    if (!user) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
+    // const user = await verifyAuth(token);
+    // if (!user) {
+    //   return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    // }
 
     // Fetch blogs created by the authenticated author
     const blogs = await Blog.find({ author: user.userId })
